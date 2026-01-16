@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SignUpDto } from './dto/auth-sign-up.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -11,8 +12,10 @@ export class AuthService {
             where: { email: dto.email }
         })
 
-        // if(exist){
-        //     throw new 
-        // }
+        if (exist) {
+            throw new ConflictException("User already exists, please sign in")
+        }
+
+
     }
 }
