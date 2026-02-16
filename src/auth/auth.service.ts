@@ -1,8 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { signUpDto } from './dto/sign-up.dto';
 import { AuthRepository } from './auth.repository';
 import { TokenService } from './token.service';
 import { SendAuthMegicLink } from './magic-link.service';
+import { signInDto } from './dto/sign-in.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,5 +22,16 @@ export class AuthService {
 
         const token = this.tokenService.magicLinkToken({ name: signUpDto.name, email: signUpDto.email, method: METHOD });
         return this.magicLinkService.sendMagicLink({ token, email: signUpDto.email })
+    }
+
+    async signIn(signInDto: signInDto) {
+        const METHOD: "sign-in" = "sign-in"
+        const existingUser = await this.authRepo.findByEmail(signInDto.email)
+        if (!existingUser) {
+            throw new UnauthorizedException("User does not exist. Please sign up.")
+        }
+
+        const token = this.tokenService.magicLinkToken({ email: signInDto.email, method: METHOD })
+        return this.magicLinkService.sendMagicLink({ token, email: signInDto.email })
     }
 }

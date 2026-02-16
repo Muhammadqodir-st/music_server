@@ -16,7 +16,7 @@ export class TokenService {
             email: payload.email
         }, { expiresIn: SHORT_EXPIRE_DATE });
 
-        return { accessToken }
+        return { accessToken };
     };
 
     generateTokens(payload: IUser) {
@@ -30,7 +30,7 @@ export class TokenService {
             email: payload.email
         }, { expiresIn: LONG_EXPIRE_DATE });
 
-        return { accessToken, refreshToken }
+        return { accessToken, refreshToken };
     };
 
     magicLinkToken(payload: IMagicLinkToken) {
@@ -42,6 +42,6 @@ export class TokenService {
     };
 
     verifyToken(token: string) {
-        return this.jwtService.verifyAsync(token)
-    }
+        return this.jwtService.verifyAsync(token);
+    };
 }
