@@ -4,6 +4,7 @@ import { signUpDto } from './dto/sign-up.dto';
 import { signInDto } from './dto/sign-in.dto';
 import { MegicLinkGuard } from './guards/auth.guard';
 import type { Response } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -30,7 +31,7 @@ export class AuthController {
             httpOnly: true,
             sameSite: "lax",
             secure: false,
-            maxAge: 23 * 24 * 60 * 60 * 1000,
+            maxAge: 15 * 60 * 1000,
             path: "/",
         });
 
@@ -43,7 +44,37 @@ export class AuthController {
         });
 
         res.json({ message: "setting up cookie" });
+    };
+
+    @UseGuards(AuthGuard("google"))
+    @Get("google")
+    googleLogin(): void {
+        return;
     }
+
+    @UseGuards(AuthGuard("google"))
+    @Get("google/callback")
+    async googleCallBack(@Req() req: any, @Res() res: any) {
+        const { accessToken, refreshToken } = await this.authService.googleLogin(req.user, res)
+
+        res.cookie("accessToken", accessToken, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false,
+            maxAge: 15 * 60 * 1000,
+            path: "/",
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false,
+            maxAge: 23 * 24 * 60 * 60 * 1000,
+            path: "/",
+        });
+
+        return res.redirect(process.env.FRONTEND_URL as string);
+    };
 
     @UseGuards(MegicLinkGuard)
     @Get("profile")

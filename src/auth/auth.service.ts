@@ -5,7 +5,7 @@ import { TokenService } from './token.service';
 import { SendAuthMegicLink } from './magic-link.service';
 import { signInDto } from './dto/sign-in.dto';
 import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt';
-import { IUser } from './types/user.type';
+import { IGoogleUser, IUser } from './types/user.type';
 
 @Injectable()
 export class AuthService {
@@ -29,8 +29,13 @@ export class AuthService {
     async signIn(signInDto: signInDto) {
         const METHOD: "sign-in" = "sign-in"
         const existingUser = await this.authRepo.findByEmail(signInDto.email);
+
         if (!existingUser) {
             throw new UnauthorizedException("User does not exist. Please sign up.");
+        };
+
+        if (existingUser.provider === "google") {
+            throw new ConflictException("User signed up using Google, so use Google for signing in.");
         };
 
         const token = this.tokenService.magicLinkToken({ email: signInDto.email, method: METHOD });
@@ -73,6 +78,21 @@ export class AuthService {
 
             throw new UnauthorizedException("Unauthorized.");
         };
+    };
+
+    async googleLogin(payload: IGoogleUser, res: any) {
+        const user = await this.authRepo.findByEmail(payload.email);
+
+        if (!user) {
+            const [newUser] = await this.authRepo.createGoogleUser(payload)
+            return this.tokenService.generateTokens(newUser)
+        };
+
+        if (user.provider !== "google") {
+            res.redirect(`${process.env.FRONTEND_URL}/auth/sign-in`);
+        };
+
+        return this.tokenService.generateTokens(user);
     };
 
     async profile(payload: IUser) {

@@ -6,13 +6,14 @@ import { SendAuthMegicLink } from './magic-link.service';
 import { MailerModule } from 'src/mailer/mailer.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from './token.service';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [MailerModule, JwtModule.register({
     global: true,
-    secret: process.env.JWT_SECRET
+    secret: process.env.JWT_SECRET,
   })],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, SendAuthMegicLink, TokenService]
+  providers: [AuthService, AuthRepository, SendAuthMegicLink, TokenService, GoogleStrategy]
 })
 export class AuthModule { }
