@@ -13,13 +13,13 @@ export class MegicLinkGuard implements CanActivate {
         const request = context.switchToHttp().getRequest();
         const response = context.switchToHttp().getResponse();
 
-        const { accsessToken, refreshToken } = request.cookies;
+        const { accessToken, refreshToken } = request.cookies;
 
-        if (!accsessToken && !refreshToken) {
+        if (!accessToken && !refreshToken) {
             throw new UnauthorizedException("Accses toen cookie not found.");
         };
 
-        if (!accsessToken && refreshToken) {
+        if (!accessToken && refreshToken) {
             const decoded = await this.jwtService.verifyAsync(refreshToken);
             const { accessToken: newAccessToken } = this.tokenService.generateAccessToken(decoded)
             response.cookie("accessToken", newAccessToken, {
@@ -33,7 +33,7 @@ export class MegicLinkGuard implements CanActivate {
         };
 
         try {
-            const decoded = await this.jwtService.verifyAsync(accsessToken);
+            const decoded = await this.jwtService.verifyAsync(accessToken);
             request.user = decoded;
             return true;
         } catch (error) {

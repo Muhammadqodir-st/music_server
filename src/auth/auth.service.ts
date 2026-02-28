@@ -98,7 +98,7 @@ export class AuthService {
     async profile(payload: IUser) {
         const user = await this.authRepo.findByProfileEmail(payload.email);
 
-        if (user) {
+        if (!user) {
             throw new UnauthorizedException("User not found.");
         };
 
