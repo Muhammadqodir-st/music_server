@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { MailerService } from "src/mailer/mailer.service";
+import { MailerService } from "../mailer/mailer.service";
 import { ISendMagicLink } from "./types/magic-link.type";
 
 @Injectable()

@@ -3,7 +3,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AuthRepository } from './auth.repository';
 import { SendAuthMegicLink } from './magic-link.service';
-import { MailerModule } from 'src/mailer/mailer.module';
+import { MailerModule } from '../mailer/mailer.module';
 import { JwtModule } from '@nestjs/jwt';
 import { TokenService } from './token.service';
 import { GoogleStrategy } from './strategies/google.strategy';

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { eq } from "drizzle-orm";
-import { db } from "src/db/drizzle";
-import { usersTable } from "src/db/schema";
+import { db } from "../db/drizzle";
+import { usersTable } from "../db/schema";
 import { IGoogleUser, IUser } from "./types/user.type";
 
 @Injectable()
