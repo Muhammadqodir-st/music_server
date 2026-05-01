@@ -4,5 +4,5 @@ export class signInDto {
     @IsNotEmpty()
     @IsString()
     @IsEmail()
-    email: string;
+    email!: string;
 }
