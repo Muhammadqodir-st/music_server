@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, text, timestamp, uuid, uniqueIndex, index } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, text, timestamp, uuid, uniqueIndex, index, integer } from "drizzle-orm/pg-core";
 
 export const ProviderEnum = pgEnum("provider", ["email", "google"]);
 
@@ -15,10 +15,13 @@ export const usersTable = pgTable("users", {
     emailIdx: index("users_email_idx").on(t.email)
 }));
 
-export const musicTable = pgTable("musics", {
+export const musicsTable = pgTable("musics", {
     id: uuid().primaryKey().defaultRandom(),
     title: text("title").notNull(),
     artwork: text("artwork"),
     song: text("song").notNull(),
+    userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
     createdAt: timestamp("createdAt").notNull().defaultNow()
-});
+}, (t) => ({
+    userIdIdx: index("musics_user_id_idx").on(t.userId)
+})); 
