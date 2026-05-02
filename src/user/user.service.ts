@@ -8,7 +8,11 @@ import { updateDto } from './dto/update.dto';
 export class UserService {
 
     async getAll() {
-        const users = await db.query.usersTable.findMany();
+        const users = await db.query.usersTable.findMany({
+            with: {
+                musics: true
+            }
+        });
 
         return users;
     };
