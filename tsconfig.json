@@ -22,7 +22,9 @@
     "noFallthroughCasesInSwitch": false,
     "types": [
       "node",
-      "jest"
+      "jest",
+      "express",
+      "multer"
     ]
   }
 }
