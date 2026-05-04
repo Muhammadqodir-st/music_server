@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { updateDto } from './dto/update.dto';
 import { UsersGuard } from './guards/user.guard';
@@ -18,9 +18,9 @@ export class UserController {
     };
 
     @UseGuards(UsersGuard)
-    @Put(":id")
-    update(@Param("id") id: string, @Body() dto: updateDto) {
-        return this.userService.update(id, dto);
+    @Put()
+    update(@Req() req: any, @Body() dto: updateDto) {
+        return this.userService.update(req.user.id, dto);
     };
 
     @Delete(":id")

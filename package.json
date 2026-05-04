@@ -32,11 +32,14 @@
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.4",
     "drizzle-orm": "^0.45.1",
+    "file-type": "^22.0.1",
     "nodemailer": "^8.0.1",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.18.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sharp": "^0.34.5",
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
