@@ -18,7 +18,7 @@ export const usersTable = pgTable("users", {
 export const musicsTable = pgTable("musics", {
     id: uuid().primaryKey().defaultRandom(),
     title: text("title").notNull(),
-    artwork: text("artwork"),
+    artwork: text("artwork").default("https://community.spotify.com/t5/image/serverpage/image-id/196380iDD24539B5FCDEAF9/image-size/medium?v=v2&px=400"),
     song: text("song").notNull(),
     userId: uuid("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
     createdAt: timestamp("createdAt").notNull().defaultNow()

@@ -1,0 +1,1 @@
+ALTER TABLE "musics" ALTER COLUMN "artwork" SET DEFAULT 'salom';

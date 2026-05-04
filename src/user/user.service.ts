@@ -42,8 +42,8 @@ export class UserService {
             throw new NotFoundException("User not found");
         };
 
-        const deletedUser = await db.delete(usersTable).where(eq(usersTable.id, userId));
+        await db.delete(usersTable).where(eq(usersTable.id, userId));
 
-        return { message: "User deleted" };
+        return "User deleted";
     };
 };

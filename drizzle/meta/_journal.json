@@ -15,6 +15,20 @@
       "when": 1777631661587,
       "tag": "0001_glossy_joystick",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777886296369,
+      "tag": "0002_opposite_junta",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1777887964614,
+      "tag": "0003_lazy_blob",
+      "breakpoints": true
     }
   ]
 }
