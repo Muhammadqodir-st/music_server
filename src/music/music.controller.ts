@@ -13,7 +13,7 @@ export class MusicController {
         return this.musicServer.getAll();
     };
 
-    @Get("id")
+    @Get("/:id")
     getById(@Param("id") id: string) {
         return this.musicServer.getById(id);
     };
@@ -29,7 +29,7 @@ export class MusicController {
         return this.musicServer.createMusic(req.user.id, dto, files.artwork, files.song);
     };
 
-    @Delete("id")
+    @Delete("/:id")
     deleteById(@Param("id") id: string) {
         return this.musicServer.deleteById(id);
     };

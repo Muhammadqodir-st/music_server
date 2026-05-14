@@ -14,7 +14,7 @@ export class MusicService {
         return await db.select().from(musicsTable);
     };
 
-    async getById(id) {
+    async getById(id:string) {
         const music = await db.select().from(musicsTable).where(eq(musicsTable.id, id));
 
         if (music.length === 0) throw new NotFoundException("Music not found");
